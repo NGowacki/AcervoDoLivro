@@ -1,0 +1,94 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #0044cc;
+    color: white;
+    padding: 1em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header .logo {
+    font-size: 1.5em;
+}
+
+header nav ul {
+    list-style: none;
+    display: flex;
+    gap: 1em;
+}
+
+header nav ul li {
+    display: inline;
+}
+
+header nav ul li a {
+    color: white;
+    text-decoration: none;
+}
+
+#banner {
+    background: url('banner.jpg') no-repeat center center/cover;
+    color: white;
+    text-align: center;
+    padding: 5em 1em;
+}
+
+#banner h1 {
+    font-size: 2.5em;
+}
+
+#banner .btn {
+    background-color: #ff6600;
+    color: white;
+    padding: 0.5em 1em;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+#caracteristicas {
+    display: flex;
+    justify-content: space-around;
+    padding: 2em 1em;
+    background-color: #f9f9f9;
+}
+
+#caracteristicas .caracteristica {
+    max-width: 300px;
+    text-align: center;
+}
+
+footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 1em 0;
+}
+
+footer .social-media {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    gap: 1em;
+    padding: 0;
+}
+
+footer .social-media li {
+    display: inline;
+}
+
+footer .social-media li a {
+    color: white;
+    text-decoration: none;
+}
+
+
+
+.carouselExampleCaptions {
+    width: 80%;
+}
