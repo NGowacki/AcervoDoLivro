@@ -23,3 +23,7 @@ body {
     background-color: #112d4e;
     color: var(--corClara);
 }
+.returnBtn {
+    color: #000;
+    text-decoration: none;
+}

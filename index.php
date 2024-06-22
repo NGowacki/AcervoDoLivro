@@ -6,6 +6,11 @@ $sql = "SELECT Livros.id, Livros.titulo, Livros.anoPublic, Livros.genero, Livros
         FROM Livros
         JOIN Autores ON Livros.autor_id = Autores.id";
 $result = $conn->query($sql);
+
+$sql_destaques = "SELECT livros.titulo, livros.imgName 
+                  FROM destaques 
+                  JOIN livros ON destaques.livro = livros.id";
+$result_destaques = $conn->query($sql_destaques);
 ?>
 
 <!DOCTYPE html>
@@ -27,24 +32,20 @@ $result = $conn->query($sql);
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">Home</a>
+                        <a class="nav-link active" aria-current="page" href="index.php">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Link</a>
+                        <a class="nav-link" href="gerenciarDestaques.php">Destaques</a>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Dropdown
+                            Cadastros
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">Action</a></li>
-                            <li><a class="dropdown-item" href="#">Another action</a></li>
+                            <li><a class="dropdown-item" href="cadastrarLivro.php">Livros</a></li>
                             <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="#">Something else here</a></li>
+                            <li><a class="dropdown-item" href="cadastrarAutor.php">Autores</a></li>
                         </ul>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link disabled" aria-disabled="true">Disabled</a>
                     </li>
                 </ul>
             </div>
@@ -53,32 +54,30 @@ $result = $conn->query($sql);
     <main>
         <div id="carouselExampleCaptions" class="carousel slide">
             <div class="carousel-indicators">
-                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                <?php
+                $active = 'active';
+                $slide_to = 0;
+                while ($row = $result_destaques->fetch_assoc()) {
+                    echo "<button type='button' data-bs-target='#carouselExampleCaptions' data-bs-slide-to='$slide_to' class='$active' aria-current='true' aria-label='Slide $slide_to'></button>";
+                    $active = '';
+                    $slide_to++;
+                }
+                ?>
             </div>
             <div class="carousel-inner">
-                <div class="carousel-item active">
-                    <img src="img/teste.png" class="d-block w-100" alt="...">
-                    <div class="carousel-caption d-none d-md-block">
-                        <h5>First slide label</h5>
-                        <p>Some representative placeholder content for the first slide.</p>
-                    </div>
-                </div>
-                <div class="carousel-item">
-                    <img src="img/teste.png" class="d-block w-100" alt="...">
-                    <div class="carousel-caption d-none d-md-block">
-                        <h5>Second slide label</h5>
-                        <p>Some representative placeholder content for the second slide.</p>
-                    </div>
-                </div>
-                <div class="carousel-item">
-                    <img src="img/teste.png" class="d-block w-100" alt="...">
-                    <div class="carousel-caption d-none d-md-block">
-                        <h5>Third slide label</h5>
-                        <p>Some representative placeholder content for the third slide.</p>
-                    </div>
-                </div>
+                <?php
+                $active = 'active';
+                $result_destaques->data_seek(0);
+                while ($row = $result_destaques->fetch_assoc()) {
+                    echo "<div class='carousel-item $active'>
+                            <img src='img/{$row['imgName']}' class='d-block w-100' alt='...'>
+                            <div class='carousel-caption d-none d-md-block'>
+                                <h5>{$row['titulo']}</h5>
+                            </div>
+                        </div>";
+                    $active = '';
+                }
+                ?>
             </div>
             <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
