@@ -2,6 +2,8 @@
 
 :root {
     --corClara: #f9f7f7;
+    --primaryColor: #112d4e;
+    --errorColor: #af5252;
 }
 
 body {
@@ -20,10 +22,39 @@ body {
 }
 
 .navbar.navbar-expand-lg {
-    background-color: #112d4e;
+    background-color: var(--primaryColor);
+}
+.navbar.navbar-expand-lg ul {
+    background: var(--primaryColor);
+}
+.navbar.navbar-expand-lg a {
     color: var(--corClara);
+}
+.navbar.navbar-expand-lg a:hover {
+    background: var(--primaryColor);
 }
 .returnBtn {
     color: #000;
     text-decoration: none;
+}
+
+.carousel-item {
+    position: relative;
+    height: 500px;
+    background: url('../img/background.png') no-repeat center center;
+    background-size: cover;
+}
+.carousel-item img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-width: 25%;
+    max-height: 100%;
+}
+
+.error {
+    background: var(--errorColor);
+    height: 50px;
+    color: #fff;
 }
