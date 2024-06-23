@@ -53,7 +53,7 @@ include 'connection.php';
                     // Tratar a data para o formato correto
                     $dataNascimento = date("Y-m-d", strtotime($dataNascimento));
                 
-                    // Inserir dados no banco de dados
+               
                     $sql = "INSERT INTO Autores (nome, dataNascimento, nacionalidade, Bibliografia)
                             VALUES ('$nome', '$dataNascimento', '$nacionalidade', '$bibliografia')";
                 
