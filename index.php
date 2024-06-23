@@ -1,16 +1,37 @@
 <?php
 include 'connection.php'; // Inclui o arquivo de conexão ao banco de dados
-
+include 'function.php';
 // Consulta para obter os livros e seus autores
 $sql = "SELECT Livros.id, Livros.titulo, Livros.anoPublic, Livros.genero, Livros.estoque, Livros.imgName, Autores.nome AS autor
         FROM Livros
         JOIN Autores ON Livros.autor_id = Autores.id";
 $result = $conn->query($sql);
 
+$livros = [];
+while ($row = $result->fetch_assoc()) {
+    $livros[] = [
+        'id' => $row['id'],
+        'titulo' => $row['titulo'],
+        'anoPublic' => $row['anoPublic'],
+        'genero' => $row['genero'],
+        'estoque' => $row['estoque'],
+        'imgName' => $row['imgName'],
+        'autor' => $row['autor']
+    ];
+}
+
 $sql_destaques = "SELECT livros.titulo, livros.imgName 
                   FROM destaques 
                   JOIN livros ON destaques.livro = livros.id";
 $result_destaques = $conn->query($sql_destaques);
+
+$destaques = [];
+while ($row = $result_destaques->fetch_assoc()) {
+    $destaques[] = [
+        'titulo' => $row['titulo'],
+        'imgName' => $row['imgName']
+    ];
+}
 ?>
 
 <!DOCTYPE html>
@@ -47,6 +68,9 @@ $result_destaques = $conn->query($sql_destaques);
                             <li><a class="dropdown-item" href="cadastrarAutor.php">Autores</a></li>
                         </ul>
                     </li>
+                    <li class="nav-item">
+                    <a class="nav-link" aria-current="page" href="meusAutores.php">Meus Autores</a>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -56,26 +80,23 @@ $result_destaques = $conn->query($sql_destaques);
             <div class="carousel-indicators">
                 <?php
                 $active = 'active';
-                $slide_to = 0;
-                while ($row = $result_destaques->fetch_assoc()) {
+                foreach ($destaques as $index => $destaque) {
                     ?>
-                    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="<?= $slide_to ?>" class="<?= $active ?>" aria-current="true" aria-label="Slide <?= $slide_to ?>"></button>
+                    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="<?= $index ?>" class="<?= $active ?>" aria-current="true" aria-label="Slide <?= $index ?>"></button>
                     <?php
                     $active = '';
-                    $slide_to++;
                 }
                 ?>
             </div>
             <div class="carousel-inner">
                 <?php
                 $active = 'active';
-                $result_destaques->data_seek(0);
-                while ($row = $result_destaques->fetch_assoc()) {
+                foreach ($destaques as $destaque) {
                     ?>
                     <div class="carousel-item <?= $active ?>">
-                        <img src="img/<?= $row['imgName'] ?>" class="d-block w-100" alt="...">
+                        <img src="img/<?= $destaque['imgName'] ?>" class="d-block w-100" alt="...">
                         <div class="carousel-caption d-none d-md-block">
-                            <h5><?= $row['titulo'] ?></h5>
+                            <h5><?= $destaque['titulo'] ?></h5>
                         </div>
                     </div>
                     <?php
@@ -96,27 +117,27 @@ $result_destaques = $conn->query($sql_destaques);
         <center>
             <section class="secaoLivros">
                 <?php
-                if ($result->num_rows > 0) {
-                    while ($row = $result->fetch_assoc()) {
+                if (!empty($livros)) {
+                    foreach ($livros as $livro) {
                         ?>
                         <div class="bookcard">
                             <div class="card mb-3" style="max-width: 540px;">
                                 <div class="row g-0">
                                     <div class="col-md-4">
-                                        <img src="img/<?= $row['imgName'] ?>" class="img-fluid rounded-start" alt="...">
+                                        <img src="img/<?= $livro['imgName'] ?>" class="img-fluid rounded-start" alt="...">
                                     </div>
                                     <div class="col-md-8">
                                         <div class="card-body">
-                                            <h5 class="card-title"><?= $row['titulo'] ?></h5>
-                                            <p class="card-text">Ano publicado: <?= $row['anoPublic'] ?></p>
-                                            <p class="card-text">Gênero: <?= $row['genero'] ?></p>
-                                            <p class="card-text">Autor: <?= $row['autor'] ?></p>
-                                            <p class="card-text"><small class="text-body-secondary">Quantidade em estoque: <?= $row['estoque'] ?></small></p>
+                                            <h5 class="card-title"><?= $livro['titulo'] ?></h5>
+                                            <p class="card-text">Ano publicado: <?= $livro['anoPublic'] ?></p>
+                                            <p class="card-text">Gênero: <?= $livro['genero'] ?></p>
+                                            <p class="card-text">Autor: <?= $livro['autor'] ?></p>
+                                            <p class="card-text"><small class="text-body-secondary">Quantidade em estoque: <?= $livro['estoque'] ?></small></p>
                                         </div>
                                     </div>
                                 </div>
-                                <a href="editarLivro.php?id=<?= $row['id'] ?>" class="btn btn-primary">Editar</a>
-                                <a href="deletarLivro.php?id=<?= $row['id'] ?>" class="btn btn-danger">Deletar</a>
+                                <a href="editarLivro.php?id=<?= $livro['id'] ?>" class="btn btn-primary">Editar</a>
+                                <a href="deletarLivro.php?id=<?= $livro['id'] ?>" class="btn btn-danger">Deletar</a>
                             </div>
                         </div>
                         <?php

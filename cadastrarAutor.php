@@ -31,6 +31,9 @@
                             <li><hr class="dropdown-divider"></li>
                             <li><a class="dropdown-item" href="cadastrarAutor.php">Autores</a></li>
                         </ul>
+                        <li class="nav-item">
+                    <a class="nav-link" aria-current="page" href="meusAutores.php">Meus Autores</a>
+                    </li>
                     </li>
                 </ul>
             </div>

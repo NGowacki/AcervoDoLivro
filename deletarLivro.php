@@ -1,6 +1,6 @@
 <?php
 include 'connection.php'; // Inclui o arquivo de conexão ao banco de dados
-
+include 'function.php';
 // Verifica se o ID do livro foi passado
 if (isset($_GET['id'])) {
     $id = $_GET['id'];
@@ -63,6 +63,9 @@ if (isset($_GET['id'])) {
                             </li>
                             <li><a class="dropdown-item" href="cadastrarAutor.php">Autores</a></li>
                         </ul>
+                        <li class="nav-item">
+                    <a class="nav-link" aria-current="page" href="meusAutores.php">Meus Autores</a>
+                    </li>
                     </li>
                 </ul>
             </div>
