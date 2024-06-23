@@ -27,7 +27,7 @@ $result_destaques = $conn->query($sql_destaques);
         <div class="container-fluid">
             <a class="navbar-brand" href="#">Acervo do Livro</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
+                <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
@@ -58,7 +58,9 @@ $result_destaques = $conn->query($sql_destaques);
                 $active = 'active';
                 $slide_to = 0;
                 while ($row = $result_destaques->fetch_assoc()) {
-                    echo "<button type='button' data-bs-target='#carouselExampleCaptions' data-bs-slide-to='$slide_to' class='$active' aria-current='true' aria-label='Slide $slide_to'></button>";
+                    ?>
+                    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="<?= $slide_to ?>" class="<?= $active ?>" aria-current="true" aria-label="Slide <?= $slide_to ?>"></button>
+                    <?php
                     $active = '';
                     $slide_to++;
                 }
@@ -69,12 +71,14 @@ $result_destaques = $conn->query($sql_destaques);
                 $active = 'active';
                 $result_destaques->data_seek(0);
                 while ($row = $result_destaques->fetch_assoc()) {
-                    echo "<div class='carousel-item $active'>
-                            <img src='img/{$row['imgName']}' class='d-block w-100' alt='...'>
-                            <div class='carousel-caption d-none d-md-block'>
-                                <h5>{$row['titulo']}</h5>
-                            </div>
-                        </div>";
+                    ?>
+                    <div class="carousel-item <?= $active ?>">
+                        <img src="img/<?= $row['imgName'] ?>" class="d-block w-100" alt="...">
+                        <div class="carousel-caption d-none d-md-block">
+                            <h5><?= $row['titulo'] ?></h5>
+                        </div>
+                    </div>
+                    <?php
                     $active = '';
                 }
                 ?>
@@ -93,28 +97,34 @@ $result_destaques = $conn->query($sql_destaques);
             <section class="secaoLivros">
                 <?php
                 if ($result->num_rows > 0) {
-                    while($row = $result->fetch_assoc()) {
-                        echo '<div class="bookcard">';
-                        echo '<div class="card mb-3" style="max-width: 540px;">';
-                        echo '    <div class="row g-0">';
-                        echo '        <div class="col-md-4">';
-                        echo '            <img src="img/' . $row["imgName"] . '" class="img-fluid rounded-start" alt="...">';
-                        echo '        </div>';
-                        echo '        <div class="col-md-8">';
-                        echo '            <div class="card-body">';
-                        echo '                <h5 class="card-title">' . $row["titulo"] . '</h5>';
-                        echo '                <p class="card-text">Ano publicado: ' . $row["anoPublic"] . '</p>';
-                        echo '                <p class="card-text">Gênero: ' . $row["genero"] . '</p>';
-                        echo '                <p class="card-text">Autor: ' . $row["autor"] . '</p>';
-                        echo '                <p class="card-text"><small class="text-body-secondary">Quantidade em estoque: ' . $row["estoque"] . '</small></p>';
-                        echo '            </div>';
-                        echo '        </div>';
-                        echo '    </div>';
-                        echo '</div>';
-                        echo '</div>';
+                    while ($row = $result->fetch_assoc()) {
+                        ?>
+                        <div class="bookcard">
+                            <div class="card mb-3" style="max-width: 540px;">
+                                <div class="row g-0">
+                                    <div class="col-md-4">
+                                        <img src="img/<?= $row['imgName'] ?>" class="img-fluid rounded-start" alt="...">
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="card-body">
+                                            <h5 class="card-title"><?= $row['titulo'] ?></h5>
+                                            <p class="card-text">Ano publicado: <?= $row['anoPublic'] ?></p>
+                                            <p class="card-text">Gênero: <?= $row['genero'] ?></p>
+                                            <p class="card-text">Autor: <?= $row['autor'] ?></p>
+                                            <p class="card-text"><small class="text-body-secondary">Quantidade em estoque: <?= $row['estoque'] ?></small></p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a href="editarLivro.php?id=<?= $row['id'] ?>" class="btn btn-primary">Editar</a>
+                                <a href="deletarLivro.php?id=<?= $row['id'] ?>" class="btn btn-danger">Deletar</a>
+                            </div>
+                        </div>
+                        <?php
                     }
                 } else {
-                    echo "<p>Nenhum livro encontrado.</p>";
+                    ?>
+                    <p>Nenhum livro encontrado.</p>
+                    <?php
                 }
                 ?>
             </section>
