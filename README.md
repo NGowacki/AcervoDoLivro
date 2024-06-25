@@ -13,3 +13,12 @@ Trabalho acadêmico de desenvolvimento WEB da instituição URI Erechim, baseado
 - CSS
 - JavaScript
 - Bootstrap
+# Como executar
+> Baixe o programa Xammp:
+- https://www.apachefriends.org/pt_br/download.html
+> execute o Apache e o Mysql
+> Crie o banco de dados: acervoDoLivro
+> Execute o arquivo no banco para criar as tabelas:
+- Que está dentro da pasta arquivoBanco/acervoDoLivro.sql
+> então com o Xammp rodando digite na barra de endereços do browser:
+- localhost/AcervoDoLivro
