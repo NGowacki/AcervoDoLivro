@@ -69,7 +69,10 @@ while ($row = $result_destaques->fetch_assoc()) {
                         </ul>
                     </li>
                     <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="meusAutores.php">Meus Autores</a>
+                        <a class="nav-link" aria-current="page" href="meusAutores.php">Meus Autores</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="meusLivros.php">Meus Livros</a>
                     </li>
                 </ul>
             </div>
@@ -136,8 +139,6 @@ while ($row = $result_destaques->fetch_assoc()) {
                                         </div>
                                     </div>
                                 </div>
-                                <a href="editarLivro.php?id=<?= $livro['id'] ?>" class="btn btn-primary">Editar</a>
-                                <a href="deletarLivro.php?id=<?= $livro['id'] ?>" class="btn btn-danger">Deletar</a>
                             </div>
                         </div>
                         <?php
@@ -156,5 +157,5 @@ while ($row = $result_destaques->fetch_assoc()) {
 </html>
 
 <?php
-$conn->close(); // Fecha a conexão com o banco de dados
+$conn->close();
 ?>

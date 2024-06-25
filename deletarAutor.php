@@ -62,7 +62,10 @@ if (isset($_GET['id'])) {
                         <li class="nav-item">
                     <a class="nav-link" aria-current="page" href="meusAutores.php">Meus Autores</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="meusLivros.php">Meus Livros</a>
                     </li>
+                </li>
                 </ul>
             </div>
         </div>

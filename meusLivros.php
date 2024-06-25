@@ -1,19 +1,20 @@
 <?php
 include 'connection.php'; // Inclui o arquivo de conexão ao banco de dados
-include 'function.php';
 
-// Consulta para obter os livros e seus autores
-$sql = "SELECT id, nome, dataNascimento, nacionalidade, bibliografia FROM autores";
+// Consulta para obter os livros
+$sql = "SELECT id, titulo, anoPublic, genero, autor_id, estoque, imgName FROM livros";
 $result = $conn->query($sql);
 
-$autores = [];
+$livros = [];
 while ($row = $result->fetch_assoc()) {
-    $autores[] = [
+    $livros[] = [
         'id' => $row['id'],
-        'nome' => $row['nome'],
-        'dataNascimento' => $row['dataNascimento'],
-        'nacionalidade' => $row['nacionalidade'],
-        'bibliografia' => $row['bibliografia'],
+        'titulo' => $row['titulo'],
+        'anoPublic' => $row['anoPublic'],
+        'genero' => $row['genero'],
+        'autor_id' => $row['autor_id'],
+        'estoque' => $row['estoque'],
+        'imgName' => $row['imgName'],
     ];
 }
 ?>
@@ -60,10 +61,7 @@ while ($row = $result->fetch_assoc()) {
                         </ul>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="index.php">Meus Autores</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="meusLivros.php">Meus Livros</a>
+                        <a class="nav-link" aria-current="page" href="index.php">Meus Livros</a>
                     </li>
                 </ul>
             </div>
@@ -74,32 +72,36 @@ while ($row = $result->fetch_assoc()) {
             <div class="col-12 p-5 bg-white">
                 <div class="row">
                     <div class="col text-end">
-                        <a href="cadastrarAutor.php" class="btn btn-secondary"><i class="fa-solid fa-plus me-2"></i>Novo Autor</a>
+                        <a href="cadastrarLivro.php" class="btn btn-secondary"><i class="fa-solid fa-plus me-2"></i>Novo Livro</a>
                     </div>
                 </div>
                 <hr>
-                <?php if (!empty($autores)) { ?>
-                    <table class="table table-striped table-bordered" id="table_autores">
+                <?php if (!empty($livros)) { ?>
+                    <table class="table table-striped table-bordered" id="table_livros">
                         <thead class="table-dark">
                             <tr>
-                                <th>Nome</th>
-                                <th class="text-center">Data nascimento</th>
-                                <th>Nacionalidade</th>
-                                <th class="text-center">Bibliografia</th>
+                                <th>Imagem</th>
+                                <th>Título</th>
+                                <th class="text-center">Ano Publicado</th>
+                                <th>Gênero</th>
+                                <th>Autor</th>
+                                <th class="text-center">Estoque</th>
                                 <th></th>
                             </tr>
                         </thead>
                         <tbody>
-                            <?php foreach ($autores as $autor) { ?>
+                            <?php foreach ($livros as $livro) { ?>
                                 <tr>
-                                    <td><?= $autor['nome'] ?></td>
-                                    <td class="text-center"><?= $autor['dataNascimento'] ?></td>
-                                    <td class="text-center"><?= $autor['nacionalidade'] ?></td>
-                                    <td><?= $autor['bibliografia'] ?></td>
+                                    <td><img src="img/<?= $livro['imgName'] ?>" class="img-fluid rounded-start" style="max-width: 100px;" alt="..."></td>
+                                    <td><?= $livro['titulo'] ?></td>
+                                    <td class="text-center"><?= $livro['anoPublic'] ?></td>
+                                    <td><?= $livro['genero'] ?></td>
+                                    <td><?= $livro['autor_id'] ?></td>
+                                    <td class="text-center"><?= $livro['estoque'] ?></td>
                                     <td class="text-end">
-                                        <a href="editarAutor.php?id=<?= $autor['id'] ?>"><i class="fa-regular fa-pen-to-square me-2"></i>Editar</a>
+                                        <a href="editarLivro.php?id=<?= $livro['id'] ?>"><i class="fa-regular fa-pen-to-square me-2"></i>Editar</a>
                                         <span class="mx-2 opacity-50">|</span>
-                                        <a href="deletarAutor.php?id=<?= $autor['id'] ?>"><i class="fa-solid fa-trash-can me-2"></i>Eliminar</a>
+                                        <a href="deletarLivro.php?id=<?= $livro['id'] ?>"><i class="fa-solid fa-trash-can me-2"></i>Eliminar</a>
                                     </td>
                                 </tr>
                             <?php } ?>
@@ -107,11 +109,11 @@ while ($row = $result->fetch_assoc()) {
                     </table>
                     <div class="row">
                         <div class="col">
-                            <p class="mb-5">Total: <strong><?= count($autores) ?></strong></p>
+                            <p class="mb-5">Total: <strong><?= count($livros) ?></strong></p>
                         </div>
                     </div>
                 <?php } else { ?>
-                    <p class="my-5 text-center opacity-75">Não existem autores registados.</p>
+                    <p class="my-5 text-center opacity-75">Não existem livros registrados.</p>
                 <?php } ?>
             </div>
         </div>
@@ -123,7 +125,7 @@ while ($row = $result->fetch_assoc()) {
 <script>
     $(document).ready(function() {
         // datatable
-        $('#table_autores').DataTable({
+        $('#table_livros').DataTable({
             pageLength: 10,
             pagingType: "full_numbers",
             language: {

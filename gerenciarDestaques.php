@@ -44,6 +44,12 @@ $result_livros = $conn->query($sql_livros);
                             <li><a class="dropdown-item" href="cadastrarAutor.php">Autores</a></li>
                         </ul>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="meusAutores.php">Meus Autores</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="meusLivros.php">Meus Livros</a>
+                    </li>
                 </ul>
             </div>
         </div>
